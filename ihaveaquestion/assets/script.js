@@ -9,157 +9,208 @@
 //THEN the game is over
 //WHEN the game is over
 //THEN I can save my initials and score
-const myDoc= document;
-const startButton = myDoc.getElementById('start-btn')
-const questionContainerElement = myDoc.getElementById('question-container');
-let shuffleQuestion, currentQuestionIndex;
-const questionElement = myDoc.getElementById('question')
-const answersElement = myDoc.getElementById('answer-btns')
-const submitButton = myDoc.getElementById('submit-btn')
 
 
-
-startButton.addEventListener('click', startGame)//Listened for user clicking on Start
-submitButton.addEventListener('click',() => {
-    currentQuestionIndex++
-    setQuestion()
-})
-
-//Start the game
-function startGame(){
-
-    //adds the "hide" class to "start-btn" id.
-    startButton.classList.add('hide')
-    //this randomizes questions
-    shuffleQuestion = questions.sort(() => Math.random() - .5 )
-    currentQuestionIndex = 0
-    // removes the "hide" class from "question-container" id.
-    questionContainerElement.classList.remove('hide')
-    setQuestion()//?
-
-} 
-function setQuestion(){
-    resetState()
-    showQuestion(shuffleQuestion[currentQuestionIndex
-    
-    ])
-}
-
- function showQuestion(question){
-    questionElement.innerText = question.question
-    question.answer.forEach(answer =>{
-        const button = myDoc.createElement('button')
-        button.innerText = answer.text
-        button.classList.add('btn')
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-        }
-        button.addEventListener('click', selectAnswer)
-        answersElement.appendChild(button)
-    })
- }
-//removes buttons and text predefined in HTML
- function resetState() {
-    submitButton.classList.add('hide') //states to hide
-    while (answersElement.firstChild) {
-        answersElement.removeChild
-        (answersElement.firstChild)
-    }
- }
-
-
- function selectAnswer(e){
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
-
-    setStatusClass(myDoc.body, correct)
-    Array.from(answersElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
-    if (shuffleQuestion.length > currentQuestionIndex + 1){
-        submitButton.classList.remove('hide')
-    } else {
-        startButton.innerText = 'Restart'
-        startButton.classList.remove('hide')
-    }
- }
-
- function setStatusClass(element, correct){
-    clearStatusClass(element)
-    if (correct) {
-        element.classList.add('correct')
-    } else {
-        element.classList.add('wrong')
-    }
-}
-
-
-    function clearStatusClass(element) {
-        element.classList.remove('correct')
-        element.classList.remove('wrong')
-    }
-    
-
-
-const questions = [
-    {
-        question: "What are arrays used for?",
-        answer: [
-            {text: 'Arrays store multiple values into a single variable', correct:true},
-            {text: 'Arrays steal yo girl', correct:false},
-            {text: 'Arrays shoot heatseeking killer alligators out of a cannon', correct:false},
-            {text: 'Arrays are not in JavaScript', correct:false}
-        ] 
-    
+//GLOBAL VARIABLES
+// Document object
+var myDoc = document, 
+// Index of the current question in the quiz
+    currentQuestionIndex = 0, 
+// User's score
+    score = 0,
+// Interval ID for the timer
+    timerInterval,
+// Time left in seconds
+    timeLeft = 60,
+    questions = [// These are our questions arranged as objects in an array.
+    {//1
+        question: "1",
+        options: ["1", "8", "9", "5"],
+        answer: "1"
     },
-    {
-        question: "What is a better practice for calling on the document?",
-        answer: [
-            {text: 'Store the document as a variable and call it using myDoc', correct:true},
-            {text: 'Do the Hokey pokey', correct:false},
-            {text: 'Turn Yourself Around', correct:false},
-            {text: 'That is what it is all about', correct:false}
-        ] 
-    
+
+    {//2
+        question: "2",
+        options: ["1", "3", "2", "4"],
+        answer: "2"
     },
-    {
-        question: "What are the different data types in JavaScript?",
-        answer: [
-            {text: 'Number, String, Boolean, Null, Undefined, Symbol, Array, and Object', correct:true},
-            {text: 'something', correct:false},
-            {text: 'something else', correct:false},
-            {text: 'something else entirely', correct:false}
-        ] 
     
+    {//3
+        question: "3",
+        options: ["6", "3", "5", "7"],
+        answer: "3"
     },
-    {
-        question: "What is the purpose of the “this” keyword in JavaScript?",
-        answer: [
-            {text: 'The this keyword refers to the object that is executing the current function or method. It allows access to object properties and methods within the context of that object.', correct:true},
-            {text: 'something', correct:false},
-            {text: 'something else', correct:false},
-            {text: 'something else entirely', correct:false}
-        ] 
-    
+
+    {//4
+        question: "4",
+        options: ["7", "5", "6", "4"],
+        answer: "4"
     },
-    {
-        question: "What is the difference between == and === operators in JavaScript?",
-        answer: [
-            {text: 'The equality == operator is a comparison operator that compares two values and returns true if they are equal. The strict equality === operator is also a comparison operator, but it compares two values and returns true only if they are equal and of the same type.', correct:true},
-            {text: 'something', correct:false},
-            {text: 'something else', correct:false},
-            {text: 'something else entirely', correct:false}
-        ] 
-    
+    {//5
+        question: "5",
+        options: ["7", "8", "5", "9"],
+        answer: "5"
     },
-    {
-        question: "What is the difference between “var” and “let” keywords in JavaScript?",
-        answer: [
-            {text: 'The var and let keywords are both used to declare variables in JavaScript. However, there are some key differences between the two keywords.', correct:true},
-            {text: 'something', correct:false},
-            {text: 'something else', correct:false},
-            {text: 'something else entirely', correct:false}
-        ] 
+
+    {//6
+        question: "6",
+        options: ["1", "6", "2", "3"],
+        answer: "6"
+    },
     
-    }
+    {//7
+        question: "7",
+        options: ["1", "2", "7", "3"],
+        answer: "7"
+    },
+
+    {//8
+        question: "8",
+        options: ["8", "1", "2", "3"],
+        answer: "8"
+    },
+    {//9
+        question: "9",
+        options: ["9", "1", "2", "3"],
+        answer: "9"
+    },
+
+    {//10
+        question: "10",
+        options: ["1", "2", "3", "10"],
+        answer: "10"
+    },
 ];
+// Event listener for the "Start" button
+myDoc.getElementById("start-btn").addEventListener("click", function startButtonClick() {
+    // Hide the start button
+    myDoc.getElementById("start-btn").classList.add("hide");
+
+    // Call the startQuiz function
+    startQuiz();
+});
+// Event listener for the "Submit" button
+myDoc.getElementById("submit-btn").addEventListener("click",function submitButtonClick() {
+    checkAnswer();
+});
+// Event listener for the "Save" button
+myDoc.getElementById("save-btn").addEventListener("click", saveScore);
+
+// Event listener for the "Restart Quiz" button
+myDoc.getElementById("restart-btn").addEventListener("click", function restartButtonClick() {
+    // Reset variables and display the start button
+    currentQuestionIndex = 0;
+    score = 0;
+    timeLeft = 60;
+
+    // Show the start button
+    myDoc.getElementById("start-btn").classList.remove("hide");
+
+    // Hide the "Restart Quiz" button
+    myDoc.getElementById("restart-btn").classList.add("hide");
+
+    myDoc.getElementById("game-over-container").classList.add("hide");
+
+    myDoc.getElementById("timer").classList.remove("hide");
+
+    myDoc.getElementById("start-btn").classList.add("hide");
+
+    // Call the startQuiz function
+    startQuiz();
+});
+
+
+// FUNCTIONS
+
+// Function to start the quiz
+function startQuiz() {
+    // Hide and show relevant elements
+    myDoc.getElementById("quiz-header").classList.add("hide");
+    myDoc.getElementById("quiz-container").classList.remove("hide");
+    myDoc.getElementById("question-container").classList.remove("hide");
+    myDoc.getElementById("submit-btn").classList.remove("hide");
+   // Load the first question and start the timer
+    loadQuestion();
+    startTimer();
+}
+// Function to load a question onto the page
+function loadQuestion() {
+    var currentQuestion = questions[currentQuestionIndex];
+    // Display the question text
+    myDoc.getElementById("question").innerText = currentQuestion.question;
+    // Clear existing answer buttons
+    var answerBtns = myDoc.getElementById("answer-btns");
+    answerBtns.innerHTML = "";
+    // Create buttons for each answer option 
+    currentQuestion.options.forEach(function createOptionButton(option, index) {
+        var btn = myDoc.createElement("button");
+        btn.innerText = option;
+        btn.classList.add("btn");
+        // Add an event listener to check the answer when a button is clicked
+        btn.addEventListener("click", function optionButtonClick() {
+            checkAnswer(option);
+        });
+        // Append the button to the answer buttons container
+        answerBtns.appendChild(btn);
+    });
+}
+// Function to check the user's answer
+function checkAnswer(userAnswer) {
+    var currentQuestion = questions[currentQuestionIndex];
+    // Update score and time based on the user's answer
+    if (userAnswer === currentQuestion.answer) {
+        score += 10;
+    } else {
+        timeLeft -= 10;
+    }
+    // Move to the next question or end the quiz if all questions are answered
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+    } else {
+        endQuiz();
+    }
+}
+// Function to start the timer
+function startTimer() {
+    timerInterval = setInterval(function updateTimer() {
+        // Update the timer text with a label
+        myDoc.getElementById("timer").innerText = "Time Left: " + timeLeft + " seconds";
+
+        timeLeft--;
+
+        // End the quiz if time runs out
+        if (timeLeft < 0) {
+            endQuiz();
+        }
+    }, 1000); // Update every 1000 milliseconds (1 second)
+}
+// Function to end the quiz
+function endQuiz() {
+    clearInterval(timerInterval);
+ // Hide question container and submit button, show game over container
+    myDoc.getElementById("question-container").classList.add("hide");
+    myDoc.getElementById("submit-btn").classList.add("hide");
+    myDoc.getElementById("game-over-container").classList.remove("hide");
+    myDoc.getElementById("timer").classList.add("hide");
+// Display the final score
+    myDoc.getElementById("final-score").innerText = score;
+    myDoc.getElementById("restart-btn").classList.remove("hide");
+    
+}
+
+
+
+// Function to save the user's score
+function saveScore() {
+    var initials = myDoc.getElementById("initials").value.trim();
+
+    if (initials !== "") {
+        // Store the user's initials and score in local storage
+        localStorage.setItem("userScore", JSON.stringify({ initials: initials, score: score }));
+        alert("Score saved! Initials: " + initials + ", Score: " + score);
+    } else {
+        alert("Please enter initials to save your score.");
+    }
+}
