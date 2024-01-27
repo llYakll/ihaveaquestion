@@ -7,11 +7,13 @@
 # Known Issues
 ## While taking the quiz your answer will be submitted on the "click" of your answer, this is supposed to only happen when the answer is selected, then the submit button is pressed. Will be corrected ASAP.
 
-# Screenshots
+# Screenshots and Link
 Homepage:
 ![Alt text](assets/img/Screenshot_1.png)
 Questions:
 ![Alt text](assets/img/Screenshot_3.png)
+
+Page Link: https://llyakll.github.io/ihaveaquestion/
 
 # Credits
 @beckysaurusrex for helping me structure my notation in the .js file so it looks more professional, instead of the amateur hour that was my notation previously.
