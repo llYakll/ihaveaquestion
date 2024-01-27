@@ -9,8 +9,9 @@
 
 # Screenshots
 Homepage:
-![Alt text](Screenshot_1.png)
-![Alt text](Screenshot_3.png)
+![Alt text](assets/img/Screenshot_1.png)
+Questions:
+![Alt text](assets/img/Screenshot_3.png)
 
 # Credits
 @beckysaurusrex for helping me structure my notation in the .js file so it looks more professional, instead of the amateur hour that was my notation previously.

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Quiz</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="quiz-container">
+        <div id="quiz-header">
+            <h1>Code Quiz</h1>
+        </div>
+        <div id="question-container" class="hide">
+            <div id="question">Question</div>
+            <div id="answer-btns" class="btn-grid">
+            </div>
+        </div>
+        <div class="controls">
+            <button id="start-btn" class="start-btn btn">Start Quiz</button>
+            <button id="submit-btn" class="submit-btn btn hide">Submit Answer</button>
+            <div id="timer">
+                <p class="time">Time Remaining:</p>
+                60
+                <span class="sec">Seconds</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over-container" class="hide">
+        <h2>Game Over!</h2>
+        <p>Your score: <span id="final-score">0</span></p>
+        <label for="initials">Enter Initials:</label>
+        <input type="text" id="initials" maxlength="3">
+        <button id="restart-btn" class="hide">Restart Quiz</button>
+        <button id="save-btn" class="btn">Save Score</button>
+    </div>
+</div>
+
+<script src="./assets/js/script.js"></script>
+</body>
+</html>
